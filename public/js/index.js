@@ -3,9 +3,13 @@ socket.on("connect", function () {
   console.log("connected to server");
 });
 
-socket.on("newEmail", function (email) {
-  console.log("new Email :", email);
-});
+// socket.on("newAdminMs", function (AdminMs) {
+//   console.log(AdminMs);
+// });
+
+// socket.on("userJoined", function (userMs) {
+//   console.log(userMs);
+// });
 
 socket.emit("createEmail", {
   to: "memo@yahoo.com",

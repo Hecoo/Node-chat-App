@@ -14,19 +14,30 @@ let io = socketIO(server);
 io.on("connection", (socket) => {
   console.log("A new user connected");
 
-  socket.emit("newEmail", {
-    from: "Mohsen@example.com",
-    text: "hey this is me emitting custom event",
-    createdAt: 123,
+  socket.emit("newMessage", {
+    from: "Admin",
+    text: "Welcome to the chat room",
+    createAt: new Date().getTime(),
+  });
+
+  socket.broadcast.emit("newMessage", {
+    from: "Admin",
+    text: "New user Joined",
+    createAt: new Date().getTime(),
   });
 
   socket.on("createMessage", (createMessage) => {
-    console.log("create Message:", createMessage);
+    // console.log("create Message:", createMessage);
     io.emit("newMessage", {
       from: createMessage.from,
       text: createMessage.text,
       createAt: new Date().getTime(),
     });
+    // socket.broadcast.emit("newMessage", {
+    //   from: createMessage.from,
+    //   text: createMessage.text,
+    //   createAt: new Date().getTime(),
+    // });
   });
 
   // socket.emit("newMessage", {
