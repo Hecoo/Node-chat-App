@@ -1,3 +1,5 @@
+let { messageHandler } = require("./utils/message");
+
 // console.log(__dirname + "/../public");
 let path = require("path");
 let http = require("http");
@@ -14,25 +16,22 @@ let io = socketIO(server);
 io.on("connection", (socket) => {
   console.log("A new user connected");
 
-  socket.emit("newMessage", {
-    from: "Admin",
-    text: "Welcome to the chat room",
-    createAt: new Date().getTime(),
-  });
+  socket.emit(
+    "newMessage",
+    messageHandler("Admin", "Welcome to the chat room")
+  );
 
-  socket.broadcast.emit("newMessage", {
-    from: "Admin",
-    text: "New user Joined",
-    createAt: new Date().getTime(),
-  });
+  socket.broadcast.emit(
+    "newMessage",
+    messageHandler("Admin", "Anew User joined")
+  );
 
   socket.on("createMessage", (createMessage) => {
     // console.log("create Message:", createMessage);
-    io.emit("newMessage", {
-      from: createMessage.from,
-      text: createMessage.text,
-      createAt: new Date().getTime(),
-    });
+    io.emit(
+      "newMessage",
+      messageHandler(createMessage.from, createMessage.text)
+    );
     // socket.broadcast.emit("newMessage", {
     //   from: createMessage.from,
     //   text: createMessage.text,
