@@ -22,13 +22,18 @@ io.on("connection", (socket) => {
 
   socket.on("createMessage", (createMessage) => {
     console.log("create Message:", createMessage);
+    io.emit("newMessage", {
+      from: createMessage.from,
+      text: createMessage.text,
+      createAt: new Date().getTime(),
+    });
   });
 
-  socket.emit("newMessage", {
-    from: "Mohamed",
-    text: "Hello how are you today",
-    createdAt: 12,
-  });
+  // socket.emit("newMessage", {
+  //   from: "Mohamed",
+  //   text: "Hello how are you today",
+  //   createdAt: 12,
+  // });
 
   socket.on("createEmail", (createEmail) => {
     console.log("create Email:", createEmail);

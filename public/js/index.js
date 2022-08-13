@@ -12,10 +12,10 @@ socket.emit("createEmail", {
   text: "Hello world this is the custom event sent from the client to the server",
 });
 
-socket.emit("createMessage", {
-  from: "jen",
-  text: "hello what are you doing today",
-});
+// socket.emit("createMessage", {
+//   from: "jen",
+//   text: "hello what are you doing today",
+// });
 
 socket.on("newMessage", function (newMessage) {
   console.log("new Message", newMessage);
