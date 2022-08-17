@@ -26,27 +26,18 @@ io.on("connection", (socket) => {
     messageHandler("Admin", "Anew User joined")
   );
 
-  socket.on("createMessage", (createMessage) => {
+  socket.on("createMessage", (createMessage, callback) => {
     // console.log("create Message:", createMessage);
     io.emit(
       "newMessage",
       messageHandler(createMessage.from, createMessage.text)
     );
+    callback("This is from the server");
     // socket.broadcast.emit("newMessage", {
     //   from: createMessage.from,
     //   text: createMessage.text,
     //   createAt: new Date().getTime(),
     // });
-  });
-
-  // socket.emit("newMessage", {
-  //   from: "Mohamed",
-  //   text: "Hello how are you today",
-  //   createdAt: 12,
-  // });
-
-  socket.on("createEmail", (createEmail) => {
-    console.log("create Email:", createEmail);
   });
 
   socket.on("disconnect", () => {
