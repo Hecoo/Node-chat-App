@@ -8,32 +8,21 @@ socket.on("disconnect", function () {
 });
 
 socket.on("newMessage", function (newMessage) {
-  console.log("new Message", newMessage);
+  let formattedTime = moment(newMessage.createdAt).format("h:mm a");
   var li = $("<li></li>");
-  li.text(`${newMessage.from} : ${newMessage.text}`);
+  li.text(`${newMessage.from} ${formattedTime} : ${newMessage.text}`);
   jQuery("#messages").append(li);
 });
 
 socket.on("newLocationMessage", function (newMessage) {
-  console.log("new location", newMessage);
+  let formattedTime = moment(newMessage.createdAt).format("h:mm a");
   var li = $("<li></li>");
   let a = $('<a target="_blank">My Current Location</a>');
-  li.text(`${newMessage.from} :`);
+  li.text(`${newMessage.from} ${formattedTime} :`);
   a.attr("href", newMessage.url);
   li.append(a);
   jQuery("#messages").append(li);
 });
-
-// socket.emit(
-//   "createMessage",
-//   {
-//     from: "jen",
-//     text: "hello what are you doing today",
-//   },
-//   function (data) {
-//     console.log("got it", data);
-//   }
-// );
 
 $("#message-form").submit(function (e) {
   e.preventDefault();
