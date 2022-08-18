@@ -1,4 +1,4 @@
-let { messageHandler } = require("./utils/message");
+let { messageHandler, generateLocationMessage } = require("./utils/message");
 
 // console.log(__dirname + "/../public");
 let path = require("path");
@@ -33,11 +33,13 @@ io.on("connection", (socket) => {
       messageHandler(createMessage.from, createMessage.text)
     );
     callback("This is from the server");
-    // socket.broadcast.emit("newMessage", {
-    //   from: createMessage.from,
-    //   text: createMessage.text,
-    //   createAt: new Date().getTime(),
-    // });
+  });
+
+  socket.on("createLocationMessage", (coords) => {
+    io.emit(
+      "newLocationMessage",
+      generateLocationMessage("Admin", coords.latitude, coords.longitude)
+    );
   });
 
   socket.on("disconnect", () => {
