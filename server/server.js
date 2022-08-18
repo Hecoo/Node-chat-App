@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
       "newMessage",
       messageHandler(createMessage.from, createMessage.text)
     );
-    callback("This is from the server");
+    callback();
   });
 
   socket.on("createLocationMessage", (coords) => {

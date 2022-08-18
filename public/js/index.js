@@ -24,16 +24,16 @@ socket.on("newLocationMessage", function (newMessage) {
   jQuery("#messages").append(li);
 });
 
-socket.emit(
-  "createMessage",
-  {
-    from: "jen",
-    text: "hello what are you doing today",
-  },
-  function (data) {
-    console.log("got it", data);
-  }
-);
+// socket.emit(
+//   "createMessage",
+//   {
+//     from: "jen",
+//     text: "hello what are you doing today",
+//   },
+//   function (data) {
+//     console.log("got it", data);
+//   }
+// );
 
 $("#message-form").submit(function (e) {
   e.preventDefault();
@@ -44,7 +44,9 @@ $("#message-form").submit(function (e) {
       from: "User",
       text: $("[name=message]").val(),
     },
-    function () {}
+    function () {
+      $("[name=message]").val("");
+    }
   );
 });
 
