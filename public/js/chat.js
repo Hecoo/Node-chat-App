@@ -1,4 +1,6 @@
 let socket = io();
+//param takes an object and return a string
+//deparam its otherwise takes a string and returns an object
 
 let scrollToBottom = function () {
   //selectors
@@ -19,11 +21,27 @@ let scrollToBottom = function () {
 };
 
 socket.on("connect", function () {
-  console.log("connected to server");
+  let params = $.deparam(window.location.search);
+  socket.emit("join", params, function (err) {
+    if (err) {
+      alert(err);
+      window.location.href = "/";
+    } else {
+      console.log("No error");
+    }
+  });
 });
 
 socket.on("disconnect", function () {
   console.log("disconnected from the server");
+});
+
+socket.on("updateUserList", function (users) {
+  let ol = $("<ol></ol>");
+  users.forEach(function (user) {
+    ol.append($("<li></li>").text(user));
+  });
+  jQuery("#users").html(ol);
 });
 
 socket.on("newMessage", function (newMessage) {
