@@ -52,18 +52,25 @@ io.on("connection", (socket) => {
 
   socket.on("createMessage", (createMessage, callback) => {
     // console.log("create Message:", createMessage);
-    io.emit(
-      "newMessage",
-      messageHandler(createMessage.from, createMessage.text)
-    );
+    let user = users.getUser(socket.id);
+    if (user && isRealString(createMessage.text)) {
+      io.to(user.room).emit(
+        "newMessage",
+        messageHandler(user.name, createMessage.text)
+      );
+    }
+
     callback();
   });
 
   socket.on("createLocationMessage", (coords) => {
-    io.emit(
-      "newLocationMessage",
-      generateLocationMessage("User", coords.latitude, coords.longitude)
-    );
+    let user = users.getUser(socket.id);
+    if (user) {
+      io.to(user.room).emit(
+        "newLocationMessage",
+        generateLocationMessage(user.name, coords.latitude, coords.longitude)
+      );
+    }
   });
 
   socket.on("disconnect", () => {
