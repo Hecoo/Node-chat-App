@@ -12,6 +12,7 @@ let scrollToBottom = function () {
   let scrollHeight = messages.prop("scrollHeight");
   let newMessageHeight = newMessage.innerHeight();
   let lastMessageHeight = newMessage.prev().innerHeight();
+
   if (
     clientHeight + scrollTop + newMessageHeight + lastMessageHeight >=
     scrollHeight
@@ -21,7 +22,10 @@ let scrollToBottom = function () {
 };
 
 socket.on("connect", function () {
+  //console.log('connected to server')
+  // deparams to convert that data to an object so we can use
   let params = $.deparam(window.location.search);
+  console.log(params);
   socket.emit("join", params, function (err) {
     if (err) {
       alert(err);

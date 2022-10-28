@@ -9,7 +9,7 @@ let socketIO = require("socket.io");
 let PublicPath = path.join(__dirname, "/../public");
 // console.log(PublicPath);
 let express = require("express");
-const { create } = require("domain");
+
 let app = express();
 let port = process.env.PORT || 3000;
 let server = http.createServer(app);
@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
     }
 
     socket.join(params.room);
-    users.removeUser(socket.id);
+    users.removeUser(socket.id); // remove them from any of the previous room and add them to the new one
     users.addUser(socket.id, params.name, params.room);
 
     io.to(params.room).emit("updateUserList", users.getUserList(params.room));
